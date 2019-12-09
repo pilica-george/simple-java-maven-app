@@ -18,11 +18,12 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
-        post {
-		always {
-			junit 'target/surefire-reports/*.xml'
-			cucumber fileIncludePattern: "target/surefire-reports/cucumber.json"
-			emailext body: '''${SCRIPT, template="JenkinsQaReportEmail.template"}''', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test', to: 'george.caluta@ibapplications.com' , mimeType: 'text/html'
-		}
-	}
+			}
+			post {
+				always {
+					junit 'target/surefire-reports/*.xml'
+					cucumber fileIncludePattern: "target/surefire-reports/cucumber.json"
+					emailext body: '''${SCRIPT, template="JenkinsQaReportEmail.template"}''', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test', to: 'george.caluta@ibapplications.com' , mimeType: 'text/html'
+				}
+			}
 }
